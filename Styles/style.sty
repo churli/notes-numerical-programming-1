@@ -1,3 +1,6 @@
+%%% Packages
+
+\usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -6,10 +9,19 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
+
+% \usepackage{concrete} % Concrete font
+\usepackage{palatino} % Palatino font
+\usepackage{mathdots}
+\usepackage[euler-hat-accent,euler-digits]{eulervm}
+%%\usepackage{eucal} %%% usare \mathcal{}
+%%\usepackage[mathscr]{eucal} %%%usare \mathscr{testo}
+
 \usepackage{enumerate}
 \usepackage{mathrsfs}
 \usepackage{mathtools}
 \usepackage{graphicx}
+% \usepackage{accsupp} % Get better Unicode representation of glyphs constructs
 %\usepackage{subfigure}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -41,10 +53,17 @@
 \usepackage[pdfborder={0 0 0.3 [2 0]}]{hyperref}
 
 %Strikethrough
-\usepackage{soul}
+% \usepackage{soul}
 
 %Tabular rows
 \usepackage{booktabs}
+
+\usepackage{marginnote}
+\usepackage{xspace}
+\usepackage{stmaryrd}
+\usepackage{breqn}         % automatic equation breaking
+
+%%% Styles
 
 \theoremstyle{plain}
 \newtheorem{Teo}{Theorem}[section]

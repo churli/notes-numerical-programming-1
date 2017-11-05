@@ -60,7 +60,7 @@ The IEEE 754 standard also defines some special values:
 \paragraph{Machine epsilon and rounding}
 Machine epsilon, also called \emph{spacing}, is an important concept with floating point numbers, which is often used in thresholds.
 \begin{Def}[Machine epsilon]
-	Machine epsilon is defined as the smallest $\epsilon > 0$ such that, in floating point arithmetics, $1 + \epsilon \neq 1$.
+	Machine epsilon is defined as the smallest $\eps > 0$ such that, in floating point arithmetics, $1 + \eps \neq 1$.
 \end{Def}
 In other words, machine epsilon is the smallest possible mantissa.
 
@@ -68,7 +68,7 @@ When we have a number $a \in \RR$ and we want to represent it as a floating poin
 
 This $\hat{a}$ satisfies:
 \begin{equation*}
-	\frac{|a - \hat{a}|}{|a|} \leq \frac{\epsilon}{2}
+	\frac{|a - \hat{a}|}{|a|} \leq \frac{\eps}{2}
 \end{equation*}
 Note that the quantity on the left-hand side of the inequality is called \emph{relative error} of $a$.
 
@@ -88,9 +88,9 @@ If we now have a problem $f$ and we want to compute it in $x \in X$, to get $y =
 The question we now have is: how far will $\hat{y}$ be from $y$? This will surely depend on how good the approximation $\hat{x}$ of $x$ is, but also, and in a significant way, on how the problem itself intrinsically amplifies this error.
 \begin{Ex}
 	$f : x \mapsto 10^4 \cdot x,\quad Y = X = \RR$\\
-	If $|x - \hat{x}| < \epsilon$, then
+	If $|x - \hat{x}| < \eps$, then
 	\begin{dmath*}
-		|y - \hat{y}| = |f(x) - f(\hat{x})| = 10^4 |x - \hat{x}| < 10^4 \cdot \epsilon
+		|y - \hat{y}| = |f(x) - f(\hat{x})| = 10^4 |x - \hat{x}| < 10^4 \cdot \eps
 	\end{dmath*}
 	So in this case we can see the error is \emph{amplified} by a factor of $10^4$, just by the problem itself and without accounting for computational errors.
 \end{Ex}
@@ -147,7 +147,7 @@ We can prove that other arithmetic operations, as $\times$ and $\div$ are well c
 	Given an algorithm, its implementation is defined as
 	\begin{dmath*}
 		{ \hat{f}_n \circ \hat{f}_{n-1} \circ \ldots \circ \hat{f}_1 \circ \hat{f}_0, \quad \hat{f}_i \in \{\hat{+},\hat{-},\hat{\times},\hat{\div}\} }\\
-		= \texttt{round} \circ f_n \circ \ldots \circ \texttt{round} \circ f_0
+		= \op{round} \circ f_n \circ \ldots \circ \op{round} \circ f_0
 		= \hat{f}
 	\end{dmath*}
 \end{Def}
@@ -160,14 +160,65 @@ We can prove that other arithmetic operations, as $\times$ and $\div$ are well c
 \begin{Def}[Stability]
 	Given a problem $f$, an algorithm $\hat{f}$ for $f$ is said to be \emph{stable} if
 	\begin{equation*}
-		\llb f(x) - \hat{f}(x) \rrb \approx k_f(x) \cdot \epsilon
+		\llb f(x) - \hat{f}(x) \rrb \approx k_f(x) \cdot \eps
 	\end{equation*}
 	and \emph{unstable} if
 	\begin{equation*}
-		\llb f(x) - \hat{f}(x) \rrb \gg k_f(x) \cdot \epsilon
+		\llb f(x) - \hat{f}(x) \rrb \gg k_f(x) \cdot \eps
 	\end{equation*}
 \end{Def}
 \begin{Rem}
 	The intuitive meaning of stability is that if an algorithm is stable, its error amplification is in the same order of that of the theoretical conditioning of the problem. However if the algorithm is unstable, we have an error amplification wich is much greater than what it could be theoretically achievable.
+\end{Rem}
+
+\subsection[Notes on norms]{Notes on norms, matrix norms and induced matrix norms}
+\begin{Def}[Norm]
+	A (vector) norm is a function
+	\begin{equation*}
+		||\cdot|| : \RR^n \to \RR^+
+	\end{equation*}
+	satisfying all the following properties:
+	\begin{enumerate}
+		\item $||v|| = 0 \iff v = 0$
+		\item $||\alpha v|| = |\alpha|\cdot||v||,\,\forall\, \alpha \in \RR$
+		\item $||v + w|| \leq ||v|| + ||w|| \quad$ (triangle inequality, $\triangle$)
+	\end{enumerate}
+\end{Def}
+\begin{Def}[Matrix norm]
+	A matrix norm is symply a function
+	\begin{equation*}
+		||\cdot|| : \RR^{n \times m} \to \RR^+
+	\end{equation*}
+	which satisfies the three norm properties.
+\end{Def}
+\begin{Def}[Induced matrix norm]
+	Given any vector norm $||\cdot||$ on $\RR^n$ and $\RR^m$, we can define, for matrices in $\RR^{n \times m}$, the corresponding induced norm as
+	\begin{dmath*}
+		||A|| \definedas \max_{v \neq 0} \frac{||Av||}{||v||} = \max_{||v|| = 1} ||Av||
+	\end{dmath*}
+\end{Def}
+\begin{Ex}[Common induced norms]
+Some examples of commonly used induced matrix normas are:
+\begin{enumerate}[(a)]
+	\item 	Vector $1$-norm induces the \emph{column-sum norm}:
+	\begin{dmath*}
+		||A||_1 = \ldots = \max_{k=1,\ldots,m} ||a^{(k)}||_1
+	\end{dmath*}
+	\item 	Vector $2$-norm induces the \emph{spectral norm}:
+	\begin{dmath*}
+		||A||_2 = \ldots = \sqrt{\max_{j=1,\ldots,m} \lambda_j (AA^t)}
+	\end{dmath*}
+	\item 	Vector $\infty$-norm induces the \emph{row-sum norm}:
+	\begin{dmath*}
+		||A||_\infty = \ldots = \max_{k=1,\ldots,n} ||a_{(k)}||_\infty
+	\end{dmath*}
+\end{enumerate}
+\end{Ex}
+\begin{Rem}[Properties of induced norms]
+	Induced matrix norms show the following sub-moltiplicativity properties:
+	\begin{enumerate}
+		\item $||Av|| \leq ||A||\cdot||v||$
+		\item $||AB|| \leq ||A||\cdot||B||$
+	\end{enumerate}
 \end{Rem}
 %EOF

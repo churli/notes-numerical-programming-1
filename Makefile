@@ -7,6 +7,7 @@ OUTDIR=$(BASEDIR)/Out
 SECTIONSDIR=$(BASEDIR)/Sections
 FILENAME=numerical_programming_1
 KINDLEMOD=-kindle
+CALIBREFNAME=~/Calibre\ Library/Tommaso\ Bianucci/Numerical\ Programming\ 1\ \(2\)/Numerical\ Programming\ 1\ -\ Tommaso\ Bianucci.pdf
 # end vars
 
 init:
@@ -16,6 +17,7 @@ init:
 compile:
 	pdflatex -output-directory $(OUTDIR) $(BASEDIR)/$(FILENAME).tex
 	xelatex -output-directory $(OUTDIR) $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
+	cp $(OUTDIR)/$(FILENAME)$(KINDLEMOD).pdf $(CALIBREFNAME)
 bibcompile:
 	pdflatex -output-directory $(OUTDIR) $(BASEDIR)/$(FILENAME).tex
 	bibtex $(OUTDIR)/$(FILENAME).aux
@@ -25,9 +27,11 @@ bibcompile:
 	bibtex $(OUTDIR)/$(FILENAME)$(KINDLEMOD).aux
 	xelatex -output-directory $(OUTDIR) $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
 	xelatex -output-directory $(OUTDIR) $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
+	cp $(OUTDIR)/$(FILENAME)$(KINDLEMOD).pdf $(CALIBREFNAME)
 compileauto:
 	pdflatex -output-directory $(OUTDIR) -interaction nonstopmode $(BASEDIR)/$(FILENAME).tex
 	xelatex -output-directory $(OUTDIR) -interaction nonstopmode $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
+	cp $(OUTDIR)/$(FILENAME)$(KINDLEMOD).pdf $(CALIBREFNAME)
 bibcompileauto:
 	pdflatex -output-directory $(OUTDIR) -interaction nonstopmode $(BASEDIR)/$(FILENAME).tex
 	bibtex $(OUTDIR)/$(FILENAME).aux
@@ -37,6 +41,7 @@ bibcompileauto:
 	bibtex $(OUTDIR)/$(FILENAME)$(KINDLEMOD).aux
 	xelatex -output-directory $(OUTDIR) -interaction nonstopmode $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
 	xelatex -output-directory $(OUTDIR) -interaction nonstopmode $(BASEDIR)/$(FILENAME)$(KINDLEMOD).tex
+	cp $(OUTDIR)/$(FILENAME)$(KINDLEMOD).pdf $(CALIBREFNAME)
 odtcompile:
 	latex2html $(BASEDIR)/$(FILENAME).tex -dir $(OUTDIR) -split 0 -no_navigation -info "" -address "" -html_version 4.0,unicode
 autocompile:
