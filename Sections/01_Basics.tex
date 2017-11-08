@@ -28,7 +28,7 @@ With a notation abuse we can say that floating point numbers are in the form of:
 \end{equation*}
 
 \begin{Rem}
-	In case we have $m_0 = 0$, \todo{Is it with a 0 or with a 1? I need to check} we say the representation is \emph{normalized}\footnote{Which is nothing else than the scientific notation of a number.}.
+	In case we have $m_0 \neq 0$, \todo{Is it with a 0 or with a 1? I need to check} we say the representation is \emph{normalized}\footnote{Which is exactly the opposite of the scientific notation of a number.}.
 \end{Rem}
 
 \begin{Rem}
@@ -216,9 +216,9 @@ Some examples of commonly used induced matrix normas are:
 \end{Ex}
 \begin{Rem}[Properties of induced norms]
 	Induced matrix norms show the following sub-moltiplicativity properties:
-	\begin{enumerate}
-		\item $||Av|| \leq ||A||\cdot||v||$
-		\item $||AB|| \leq ||A||\cdot||B||$
-	\end{enumerate}
+	\begin{align}
+		||Av|| \leq ||A||\cdot||v|| \label{prop:indnorm1} \tag{P1}\\
+		||AB|| \leq ||A||\cdot||B|| \label{prop:indnorm2}\tag{P2}
+	\end{align}
 \end{Rem}
 %EOF
